@@ -55,6 +55,17 @@ struct CalendarData {
         }
         return Array(repeating: "0", count: size)
     }
+    
+    func numberOfWeeksInMonth() -> Int {
+        let firstDayOfMonth = firstDayOfMonth()
+        let rangeOfDays = calendar.range(of: .day, in: .month, for: currentDate)!
+        let lastDayOfMonth = calendar.date(byAdding: .day, value: rangeOfDays.count - 1, to: firstDayOfMonth)!
+        
+        let firstWeek = calendar.component(.weekOfMonth, from: firstDayOfMonth)
+        let lastWeek = calendar.component(.weekOfMonth, from: lastDayOfMonth)
+
+        return lastWeek - firstWeek + 1
+    }
 
 
     // Navega al mes anterior
@@ -73,32 +84,48 @@ struct CalendarData {
 }
 
 
+struct TappableText: View {
+    let index: Int
+    let text: String
+    @Binding var tappedIndices: [Bool]
+
+    var body: some View {
+        Text(text)
+            .foregroundColor(tappedIndices[index] ? .gray : .black)
+            .onTapGesture {
+                self.tappedIndices[index] = true
+
+                // Restablecer después de un retraso
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.tappedIndices[index] = false
+                }
+            }
+    }
+}
+
+
 struct CalendarView: View {
     @State private var calendarData = CalendarData()
+    @State private var tapped = Array(repeating: false, count: 32)
 
     var body: some View {
         VStack {
             Text(calendarData.monthString())
                 .font(.title)
                 .padding(.horizontal)
-
+            
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 15) {
-                
+                // Padding on top
                 ForEach(calendarData.createArrayBasedOnWeekday(), id: \.self) { day in
                     Text("")
                     .frame(width: 40, height: 40)
                     .background(Color.white.opacity(0.3))
                     .cornerRadius(5)
-                    .onTapGesture {
-                        // Acciones al seleccionar un día
-                        print("Día seleccionado: \(day) \(calendarData.monthString())")
-                        print("firstWeekdayOfMonth: \(calendarData.firstWeekdayOfMonth())")
-                        print("weekdayNumber: \(calendarData.weekdayNumber())")
-                    }
                 }
                 
+                // Calendar content
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
-                    Text(day)
+                    TappableText(index: Int(day) ?? 0, text: day, tappedIndices: $tapped)
                         .frame(width: 40, height: 40)
                         .background(Color.gray.opacity(0.3))
                         .cornerRadius(5)
@@ -109,6 +136,18 @@ struct CalendarView: View {
                             print("weekdayNumber: \(calendarData.weekdayNumber())")
                         }
                 }
+                
+                // Padding bottom
+                if calendarData.numberOfWeeksInMonth() < 6 {
+                    ForEach(Array(repeating: "", count: 7), id: \.self) { day in
+                        Text("")
+                        .frame(width: 40, height: 40)
+                        .background(Color.white.opacity(0.3))
+                        .cornerRadius(5)
+                    }
+                }
+
+                    
             }
             .padding(.horizontal)
 
