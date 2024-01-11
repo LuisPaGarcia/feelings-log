@@ -88,6 +88,7 @@ struct TappableText: View {
     let index: Int
     let text: String
     @Binding var tappedIndices: [Bool]
+    @Binding var selectedTab: Int
 
     var body: some View {
         Text(text)
@@ -98,6 +99,7 @@ struct TappableText: View {
                 // Restablecer después de un retraso
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.tappedIndices[index] = false
+                    self.selectedTab = 3
                 }
             }
     }
@@ -105,6 +107,8 @@ struct TappableText: View {
 
 
 struct CalendarView: View {
+    @Binding var selectedTab: Int
+
     @State private var calendarData = CalendarData()
     @State private var tapped = Array(repeating: false, count: 32)
 
@@ -125,7 +129,11 @@ struct CalendarView: View {
                 
                 // Calendar content
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
-                    TappableText(index: Int(day) ?? 0, text: day, tappedIndices: $tapped)
+                    TappableText(
+                        index: Int(day) ?? 0,
+                        text: day,
+                        tappedIndices: $tapped,
+                        selectedTab: $selectedTab)
                         .frame(width: 40, height: 40)
                         .background(Color.gray.opacity(0.3))
                         .cornerRadius(5)

@@ -15,8 +15,9 @@ struct FirstView: View {
 }
 
 struct SecondView: View {
+    @Binding var selectedTab: Int
     var body: some View {
-        CalendarView()
+        CalendarView(selectedTab: $selectedTab)
     }
 }
 

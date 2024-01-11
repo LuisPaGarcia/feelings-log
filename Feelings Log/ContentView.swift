@@ -7,25 +7,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 1
+    
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             FirstView()
                 .tabItem {
                     Image(systemName: "heart.fill")
                     Text("Primero")
                 }
+                .tag(1)
 
-            SecondView()
+            SecondView(selectedTab: $selectedTab)
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Segundo")
                 }
+                .tag(2)
 
             ThirdView()
                 .tabItem {
                     Image(systemName: "bolt.fill")
                     Text("Tercero")
                 }
+                .tag(3)
         }
     }
 }
