@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+var evaluaciones: [Date: String] = [:]
+
 struct CalendarData {
     private var calendar = Calendar.current
     private(set) var currentDate = Date()
@@ -18,6 +20,45 @@ struct CalendarData {
         formatter.dateFormat = "MMMM YYYY"
         return formatter.string(from: currentDate)
     }
+
+    // Obtiene el día del mes seleccionado
+    func daySelectedString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd"
+        return formatter.string(from: currentDate)
+    }
+    
+    // Obtiene el mes del día seleccionado
+    func monthSelectedString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM"
+        return formatter.string(from: currentDate)
+    }
+    
+    // Obtiene el mes del día seleccionado
+    func yearSelectedString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY"
+        return formatter.string(from: currentDate)
+    }
+
+    // Obtiene el mes del día seleccionado
+    func selectedDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM DD, YYYY"
+        return formatter.string(from: currentDate)
+    }
+    
+    func createDate(year: Int, month: Int, day: Int) -> Date? {
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        
+        return calendar.date(from: dateComponents)
+    }
+
 
     // Calcula los días del mes actual
     func daysInMonth() -> [String] {
@@ -83,34 +124,14 @@ struct CalendarData {
     }
 }
 
-
-struct TappableText: View {
-    let index: Int
-    let text: String
-    @Binding var tappedIndices: [Bool]
-    @Binding var selectedTab: Int
-
-    var body: some View {
-        Text(text)
-            .foregroundColor(tappedIndices[index] ? .gray : .black)
-            .onTapGesture {
-                self.tappedIndices[index] = true
-
-                // Restablecer después de un retraso
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.tappedIndices[index] = false
-                    self.selectedTab = 3
-                }
-            }
-    }
-}
-
-
 struct CalendarView: View {
     @Binding var selectedTab: Int
 
     @State private var calendarData = CalendarData()
     @State private var tapped = Array(repeating: false, count: 32)
+    @State private var isModalPresented = false
+    @State private var selectedDate = ""
+
 
     var body: some View {
         VStack {
@@ -129,19 +150,23 @@ struct CalendarView: View {
                 
                 // Calendar content
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
-                    TappableText(
-                        index: Int(day) ?? 0,
-                        text: day,
-                        tappedIndices: $tapped,
-                        selectedTab: $selectedTab)
+                    Text(day)
                         .frame(width: 40, height: 40)
                         .background(Color.gray.opacity(0.3))
                         .cornerRadius(5)
                         .onTapGesture {
                             // Acciones al seleccionar un día
-                            print("Día seleccionado: \(day) \(calendarData.monthString())")
-                            print("firstWeekdayOfMonth: \(calendarData.firstWeekdayOfMonth())")
-                            print("weekdayNumber: \(calendarData.weekdayNumber())")
+                            //print(calendarData.monthSelectedString())
+                            let month = Int(calendarData.monthSelectedString()) ?? 1
+                            //print(calendarData.yearSelectedString())
+                            let year = Int(calendarData.yearSelectedString()) ?? 1991
+                            //print(day)
+                            let selectedDate = calendarData.createDate(year: year, month: month, day: Int(day) ?? 1)
+                            //print(selectedDate)
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "MMMM dd, YYYY"
+                            self.selectedDate = formatter.string(from: selectedDate ?? Date())
+                            self.isModalPresented.toggle()
                         }
                 }
                 
@@ -158,6 +183,7 @@ struct CalendarView: View {
                     
             }
             .padding(.horizontal)
+            
 
             HStack {
                 Button("Mes Anterior") {
@@ -171,6 +197,9 @@ struct CalendarView: View {
                 }
             }
             .padding()
+        }
+        .sheet(isPresented: $isModalPresented) {
+            ModalView(selectedDate: $selectedDate)
         }
     }
 }
