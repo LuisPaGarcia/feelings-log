@@ -34,31 +34,49 @@ struct ModalView: View {
     
     var body: some View {
         VStack {
-            Text(selectedDate)
-                .font(.title)
+            Text("How are you feeling today?")
+                .font(.headline)
                 .padding()
+            Text(selectedDate)
+                .font(.subheadline)
+                .padding()
+
+           Button("Good 😄") {
+               // Acción para el botón 1
+               self.presentationMode.wrappedValue.dismiss()
+           }
+            .frame(maxWidth: .infinity, minHeight: 75)
+            .background(Color.green)
+            .foregroundColor(.white)
+            .cornerRadius(22)
+            .padding(.horizontal)
+           
+           Button("Normal 🙂") {
+               // Acción para el botón 2
+               self.presentationMode.wrappedValue.dismiss()
+           }
+            .frame(maxWidth: .infinity, minHeight: 75)
+            .background(Color.yellow)
+            .foregroundColor(.white)
+            .cornerRadius(22)
+            .padding(.horizontal)
             
-            Button("Botón 1") {
-                // Acción para el botón 1
-            }
-            .padding()
-            
-            Button("Botón 2") {
-                // Acción para el botón 2
-            }
-            .padding()
-            
-            Button("Botón 3") {
-                // Acción para el botón 3
-            }
-            .padding()
-            
-            Spacer()
-            
-            Button("Cerrar") {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-            .padding()
-        }
+           Button("Not Good 🙁") {
+               // Acción para el botón 3
+               self.presentationMode.wrappedValue.dismiss()
+           }
+            .frame(maxWidth: .infinity, minHeight: 75)
+            .background(Color.red)
+            .foregroundColor(.white)
+            .cornerRadius(22)
+            .padding(.horizontal)
+           
+           Spacer()
+           
+           Button("Cerrar") {
+               self.presentationMode.wrappedValue.dismiss()
+           }
+          
+       }
     }
 }
