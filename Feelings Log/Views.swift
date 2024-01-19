@@ -40,43 +40,43 @@ struct ModalView: View {
             Text(selectedDate)
                 .font(.subheadline)
                 .padding()
-
-           Button("Good 😄") {
-               // Acción para el botón 1
-               self.presentationMode.wrappedValue.dismiss()
-           }
+            
+            Button("Good 😄") {
+                // Acción para el botón 1
+                self.presentationMode.wrappedValue.dismiss()
+            }
             .frame(maxWidth: .infinity, minHeight: 75)
             .background(Color.green)
             .foregroundColor(.white)
             .cornerRadius(22)
             .padding(.horizontal)
-           
-           Button("Normal 🙂") {
-               // Acción para el botón 2
-               self.presentationMode.wrappedValue.dismiss()
-           }
+            
+            Button("Normal 🙂") {
+                // Acción para el botón 2
+                self.presentationMode.wrappedValue.dismiss()
+            }
             .frame(maxWidth: .infinity, minHeight: 75)
             .background(Color.yellow)
             .foregroundColor(.white)
             .cornerRadius(22)
             .padding(.horizontal)
             
-           Button("Not Good 🙁") {
-               // Acción para el botón 3
-               self.presentationMode.wrappedValue.dismiss()
-           }
+            Button("Not Good 🙁") {
+                // Acción para el botón 3
+                self.presentationMode.wrappedValue.dismiss()
+            }
             .frame(maxWidth: .infinity, minHeight: 75)
             .background(Color.red)
             .foregroundColor(.white)
             .cornerRadius(22)
             .padding(.horizontal)
-           
-           Spacer()
-           
-           Button("Cerrar") {
-               self.presentationMode.wrappedValue.dismiss()
-           }
-          
-       }
+            
+            Spacer()
+            
+            Button("Cerrar") {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+            
+        }
     }
 }

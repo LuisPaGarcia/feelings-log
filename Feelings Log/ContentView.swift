@@ -16,14 +16,14 @@ struct ContentView: View {
                     Text("Primero")
                 }
                 .tag(1)
-
+            
             SecondView(selectedTab: $selectedTab)
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Segundo")
                 }
                 .tag(2)
-
+            
             ThirdView()
                 .tabItem {
                     Image(systemName: "bolt.fill")
