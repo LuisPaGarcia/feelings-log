@@ -130,8 +130,10 @@ struct CalendarView: View {
     @State private var calendarData = CalendarData()
     @State private var tapped = Array(repeating: false, count: 32)
     @State private var isModalPresented = false
+    // State to handle flow with the modal
     @State private var selectedDate = ""
-    
+    @State private var feelingSelected = 0
+    @State private var dateFeelingMap: [String: Int] = [:]
     
     var body: some View {
         VStack {
@@ -199,7 +201,17 @@ struct CalendarView: View {
             .padding()
         }
         .sheet(isPresented: $isModalPresented) {
-            ModalView(selectedDate: $selectedDate)
+            ModalView(
+                selectedDate: $selectedDate,
+                feelingSelected: $feelingSelected,
+                onSelectFeeling: onSelectFeeling
+            )
         }
+    }
+    
+    func onSelectFeeling(selectedDate: String, feelingSelected: Int) -> Void {
+        dateFeelingMap[selectedDate] = feelingSelected
+        print("selected date: \(selectedDate), feeling: \(feelingSelected)")
+        print("Mapa actualizado: \(dateFeelingMap)")
     }
 }
