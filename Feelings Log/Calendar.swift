@@ -132,6 +132,7 @@ struct CalendarView: View {
     @State private var isModalPresented = false
     // State to handle flow with the modal
     @State private var selectedDate = ""
+    @State private var selectedDateKey = ""
     @State private var feelingSelected = 0
     @State private var dateFeelingMap: [String: Int] = [:]
     
@@ -154,7 +155,7 @@ struct CalendarView: View {
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
                     Text(day)
                         .frame(width: 40, height: 40)
-                        .background(Color.gray.opacity(0.3))
+                        .background(backgroundByMatchDate(4))
                         .cornerRadius(5)
                         .onTapGesture {
                             // Acciones al seleccionar un día
@@ -168,6 +169,8 @@ struct CalendarView: View {
                             let formatter = DateFormatter()
                             formatter.dateFormat = "MMMM dd, YYYY"
                             self.selectedDate = formatter.string(from: selectedDate ?? Date())
+                            formatter.dateFormat = "yyyyMMdd"
+                            self.selectedDateKey = formatter.string(from: selectedDate ?? Date())
                             self.isModalPresented.toggle()
                         }
                 }
@@ -203,15 +206,32 @@ struct CalendarView: View {
         .sheet(isPresented: $isModalPresented) {
             ModalView(
                 selectedDate: $selectedDate,
+                selectedDateKey: $selectedDateKey,
                 feelingSelected: $feelingSelected,
                 onSelectFeeling: onSelectFeeling
             )
         }
     }
     
-    func onSelectFeeling(selectedDate: String, feelingSelected: Int) -> Void {
-        dateFeelingMap[selectedDate] = feelingSelected
-        print("selected date: \(selectedDate), feeling: \(feelingSelected)")
+    func onSelectFeeling(selectedDateKey: String, feelingSelected: Int) -> Void {
+        dateFeelingMap[selectedDateKey] = feelingSelected
+        print("selected date: \(selectedDateKey), feeling: \(feelingSelected)")
         print("Mapa actualizado: \(dateFeelingMap)")
+    }
+    
+    private func backgroundByMatchDate(_ value: Int) -> Color {
+        if value == 1 {
+            return Color.green.opacity(0.3) // happy happy happyyy
+        }
+        
+        if value == 2 {
+            return Color.yellow.opacity(0.3) // mid mid mid
+        }
+        
+        if value == 3 {
+            return Color.red.opacity(0.3) // sad sad sad sad
+        }
+        
+        return Color.gray.opacity(0.3) // No emotion logged
     }
 }

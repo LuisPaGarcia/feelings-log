@@ -30,6 +30,7 @@ struct ThirdView: View {
 
 struct ModalView: View {
     @Binding var selectedDate: String
+    @Binding var selectedDateKey: String
     @Binding var feelingSelected: Int
     var onSelectFeeling: (String, Int) -> Void
     
@@ -46,7 +47,7 @@ struct ModalView: View {
             
             Button("Good 😄") {
                 feelingSelected = 1
-                onSelectFeeling(selectedDate,feelingSelected)
+                onSelectFeeling(selectedDateKey,feelingSelected)
                 // Acción para el botón 1
                 self.presentationMode.wrappedValue.dismiss()
             }
@@ -58,7 +59,7 @@ struct ModalView: View {
             
             Button("Normal 🙂") {
                 feelingSelected = 2
-                onSelectFeeling(selectedDate,feelingSelected)
+                onSelectFeeling(selectedDateKey,feelingSelected)
                 // Acción para el botón 2
                 self.presentationMode.wrappedValue.dismiss()
             }
@@ -70,7 +71,7 @@ struct ModalView: View {
             
             Button("Not Good 🙁") {
                 feelingSelected = 3
-                onSelectFeeling(selectedDate,feelingSelected)
+                onSelectFeeling(selectedDateKey,feelingSelected)
                 // Acción para el botón 3
                 self.presentationMode.wrappedValue.dismiss()
             }
@@ -83,7 +84,6 @@ struct ModalView: View {
             Spacer()
             
             Button("Cerrar") {
-                onSelectFeeling(selectedDate,feelingSelected)
                 self.presentationMode.wrappedValue.dismiss()
             }
             
