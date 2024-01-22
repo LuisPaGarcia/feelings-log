@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 var evaluaciones: [Date: String] = [:]
+var day_box_dimension: CGFloat = 40
 
 struct CalendarData {
     private var calendar = Calendar.current
@@ -178,7 +179,7 @@ struct CalendarView: View {
                 // Padding on top
                 ForEach(calendarData.createArrayBasedOnWeekday(), id: \.self) { day in
                     Text("")
-                        .frame(width: 40, height: 40)
+                        .frame(width: day_box_dimension, height: day_box_dimension)
                         .background(Color.white.opacity(0.3))
                         .cornerRadius(5)
                 }
@@ -186,8 +187,10 @@ struct CalendarView: View {
                 // Calendar content
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
                     Text(day)
-                        .frame(width: 40, height: 40)
+                        .frame(width: day_box_dimension, height: day_box_dimension)
                         .background(backgroundByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
+                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
+                        .overlay(addOverlayIfToday(isToday: true))
                         .cornerRadius(5)
                         .onTapGesture {
                             handleTapOnDay(day: Int(day) ?? 1)
@@ -198,7 +201,7 @@ struct CalendarView: View {
                 if calendarData.numberOfWeeksInMonth() < 6 {
                     ForEach(Array(repeating: "", count: 7), id: \.self) { day in
                         Text("")
-                            .frame(width: 40, height: 40)
+                            .frame(width: day_box_dimension, height: day_box_dimension)
                             .background(Color.white.opacity(0.3))
                             .cornerRadius(5)
                     }
@@ -221,13 +224,13 @@ struct CalendarView: View {
             .padding(.horizontal)
             
             HStack {
-                Button("Mes Anterior") {
+                Button("Past Month") {
                     calendarData.prevMonth()
                 }
                 
                 Spacer()
                 
-                Button("Mes Siguiente") {
+                Button("Next Month") {
                     calendarData.nextMonth()
                 }
             }
@@ -263,5 +266,29 @@ struct CalendarView: View {
         }
         
         return Color.gray.opacity(0.3) // No emotion logged
+    }
+    
+    private func forecolorByMatchDate(_ value: Int) -> Color {
+        if value == 1 {
+            return Color.green // happy happy happyyy
+        }
+        
+        if value == 2 {
+            return Color.orange // mid mid mid
+        }
+        
+        if value == 3 {
+            return Color.red // sad sad sad sad
+        }
+        
+        return Color.black // No emotion logged
+    }
+    
+    private func addOverlayIfToday(isToday: Bool) -> Color {
+        if isToday == true {
+            return Color.gray.opacity(0.1)
+        }
+        
+        return Color.black.opacity(0)
     }
 }
