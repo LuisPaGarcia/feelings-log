@@ -108,6 +108,20 @@ struct CalendarData {
         return lastWeek - firstWeek + 1
     }
     
+    func getDateKey(day: String) -> String {
+        // Acciones al seleccionar un día
+        //print(calendarData.monthSelectedString())
+        let month = Int(self.monthSelectedString()) ?? 1
+        //print(calendarData.yearSelectedString())
+        let year = Int(self.yearSelectedString()) ?? 1991
+        //print(day)
+        let selectedDate = self.createDate(year: year, month: month, day: Int(day) ?? 1)
+        //print(selectedDate)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        return formatter.string(from: selectedDate ?? Date())
+    }
+    
     
     // Navega al mes anterior
     mutating func prevMonth() {
@@ -130,6 +144,7 @@ struct CalendarView: View {
     @State private var calendarData = CalendarData()
     @State private var tapped = Array(repeating: false, count: 32)
     @State private var isModalPresented = false
+    
     // State to handle flow with the modal
     @State private var selectedDate = ""
     @State private var selectedDateKey = ""
@@ -155,7 +170,7 @@ struct CalendarView: View {
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
                     Text(day)
                         .frame(width: 40, height: 40)
-                        .background(backgroundByMatchDate(4))
+                        .background(backgroundByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
                         .cornerRadius(5)
                         .onTapGesture {
                             // Acciones al seleccionar un día

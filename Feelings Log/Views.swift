@@ -44,43 +44,64 @@ struct ModalView: View {
             Text(selectedDate)
                 .font(.subheadline)
                 .padding()
-            
-            Button("Good 😄") {
+            Spacer()
+            // Botón 1: "Good 😄"
+            Button(action: {
                 feelingSelected = 1
-                onSelectFeeling(selectedDateKey,feelingSelected)
+                onSelectFeeling(selectedDateKey, feelingSelected)
                 // Acción para el botón 1
                 self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Rectangle()
+                    .fill(Color.green) // Color del fondo
+                    //.frame(maxWidth: .infinity, minHeight: 75) // Tamaño
+                    .cornerRadius(15) // Bordes redondeados
+                    .overlay(
+                        Text("Good 😄")
+                            .foregroundColor(.white) // Color del texto
+                            .font(.system(size: 32)) // Tamaño del texto
+                    )
             }
-            .frame(maxWidth: .infinity, minHeight: 75)
-            .background(Color.green)
-            .foregroundColor(.white)
-            .cornerRadius(22)
             .padding(.horizontal)
-            
-            Button("Normal 🙂") {
+
+            // Botón 2: "Normal 🙂"
+            Button(action: {
                 feelingSelected = 2
-                onSelectFeeling(selectedDateKey,feelingSelected)
+                onSelectFeeling(selectedDateKey, feelingSelected)
                 // Acción para el botón 2
                 self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Rectangle()
+                    .fill(Color.yellow) // Color del fondo
+                    //.frame(maxWidth: .infinity, minHeight: 75) // Tamaño
+                    .cornerRadius(15) // Bordes redondeados
+                    .overlay(
+                        Text("Normal 🙂")
+                            .foregroundColor(.white) // Color del texto
+                            .font(.system(size: 32)) // Tamaño del texto
+                    )
             }
-            .frame(maxWidth: .infinity, minHeight: 75)
-            .background(Color.yellow)
-            .foregroundColor(.white)
-            .cornerRadius(22)
             .padding(.horizontal)
-            
-            Button("Not Good 🙁") {
+
+            // Botón 3: "Not Good 🙁"
+            Button(action: {
                 feelingSelected = 3
-                onSelectFeeling(selectedDateKey,feelingSelected)
+                onSelectFeeling(selectedDateKey, feelingSelected)
                 // Acción para el botón 3
                 self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Rectangle()
+                    .fill(Color.red) // Color del fondo
+                    //.frame(maxWidth: .infinity, minHeight: 75) // Tamaño
+                    .cornerRadius(15) // Bordes redondeados
+                    .overlay(
+                        Text("Not Good 🙁")
+                            .foregroundColor(.white) // Color del texto
+                            .font(.system(size: 32)) // Tamaño del texto
+                    )
             }
-            .frame(maxWidth: .infinity, minHeight: 75)
-            .background(Color.red)
-            .foregroundColor(.white)
-            .cornerRadius(22)
             .padding(.horizontal)
-            
+
             Spacer()
             
             Button("Cerrar") {
