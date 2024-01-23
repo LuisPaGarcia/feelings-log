@@ -253,40 +253,35 @@ struct CalendarView: View {
     }
     
     private func backgroundByMatchDate(_ value: Int) -> Color {
-        if value == 1 {
-            return Color.green.opacity(0.3) // happy happy happyyy
-        }
-        
-        if value == 2 {
+        switch value {
+        case 1:
+            return Color.green.opacity(0.3) // happy happy happy
+        case 2:
             return Color.yellow.opacity(0.3) // mid mid mid
-        }
-        
-        if value == 3 {
+        case 3:
             return Color.red.opacity(0.3) // sad sad sad sad
+        default:
+            return Color.gray.opacity(0.3) // No emotion logged
         }
-        
-        return Color.gray.opacity(0.3) // No emotion logged
     }
-    
+
     private func forecolorByMatchDate(_ value: Int) -> Color {
-        if value == 1 {
-            return Color.green // happy happy happyyy
+        switch value {
+        case 1:
+            return Color.green
+        case 2:
+            return Color.orange
+        case 3:
+            return Color.red
+        default:
+            return Color.black
         }
-        
-        if value == 2 {
-            return Color.orange // mid mid mid
-        }
-        
-        if value == 3 {
-            return Color.red // sad sad sad sad
-        }
-        
-        return Color.black // No emotion logged
     }
+
     
     private func addOverlayIfToday(isToday: Bool) -> Color {
         if isToday == true {
-            return Color.gray.opacity(0.1)
+            return Color.gray.opacity(0.0)
         }
         
         return Color.black.opacity(0)
