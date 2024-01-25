@@ -151,6 +151,23 @@ struct CalendarView: View {
     @State private var feelingSelected = 0
     @State private var dateFeelingMap: [String: Int] = [:]
     
+    fileprivate func handleTapOnDay(day: Int) {
+        // Acciones al seleccionar un día
+        //print(calendarData.monthSelectedString())
+        let month = Int(calendarData.monthSelectedString()) ?? 1
+        //print(calendarData.yearSelectedString())
+        let year = Int(calendarData.yearSelectedString()) ?? 1991
+        //print(day)
+        let selectedDate = calendarData.createDate(year: year, month: month, day: Int(day))
+        //print(selectedDate)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd, YYYY"
+        self.selectedDate = formatter.string(from: selectedDate ?? Date())
+        formatter.dateFormat = "yyyyMMdd"
+        self.selectedDateKey = formatter.string(from: selectedDate ?? Date())
+        self.isModalPresented.toggle()
+    }
+    
     var body: some View {
         VStack {
             Text(calendarData.monthString())
@@ -173,20 +190,7 @@ struct CalendarView: View {
                         .background(backgroundByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
                         .cornerRadius(5)
                         .onTapGesture {
-                            // Acciones al seleccionar un día
-                            //print(calendarData.monthSelectedString())
-                            let month = Int(calendarData.monthSelectedString()) ?? 1
-                            //print(calendarData.yearSelectedString())
-                            let year = Int(calendarData.yearSelectedString()) ?? 1991
-                            //print(day)
-                            let selectedDate = calendarData.createDate(year: year, month: month, day: Int(day) ?? 1)
-                            //print(selectedDate)
-                            let formatter = DateFormatter()
-                            formatter.dateFormat = "MMMM dd, YYYY"
-                            self.selectedDate = formatter.string(from: selectedDate ?? Date())
-                            formatter.dateFormat = "yyyyMMdd"
-                            self.selectedDateKey = formatter.string(from: selectedDate ?? Date())
-                            self.isModalPresented.toggle()
+                            handleTapOnDay(day: Int(day) ?? 1)
                         }
                 }
                 
@@ -199,11 +203,22 @@ struct CalendarView: View {
                             .cornerRadius(5)
                     }
                 }
-                
-                
             }
             .padding(.horizontal)
             
+            VStack {
+                Text("Today Log")
+                    .frame(maxWidth: .infinity, minHeight: 75)
+                    .background(Color.gray.opacity(0.3))
+                    .cornerRadius(5)
+                    .onTapGesture {
+                        let today = Date()
+                        let calendar = Calendar.current
+                        let day = calendar.component(.day, from: today)
+                        handleTapOnDay(day: day)
+                    }
+            }
+            .padding(.horizontal)
             
             HStack {
                 Button("Mes Anterior") {
