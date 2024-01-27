@@ -111,13 +111,9 @@ struct CalendarData {
     
     func getDateKey(day: String) -> String {
         // Acciones al seleccionar un día
-        //print(calendarData.monthSelectedString())
         let month = Int(self.monthSelectedString()) ?? 1
-        //print(calendarData.yearSelectedString())
         let year = Int(self.yearSelectedString()) ?? 1991
-        //print(day)
         let selectedDate = self.createDate(year: year, month: month, day: Int(day) ?? 1)
-        //print(selectedDate)
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd"
         return formatter.string(from: selectedDate ?? Date())
@@ -137,6 +133,18 @@ struct CalendarData {
             currentDate = newDate
         }
     }
+    
+    // Navega al mes actual (basado en la fecha actual
+    mutating func goToCurrentMonth() {
+        let now = Date() // Obtiene la fecha actual
+        let yearMonthComponents: Set<Calendar.Component> = [.year, .month] // Define los componentes que nos interesan (año y mes)
+        let components = calendar.dateComponents(yearMonthComponents, from: now) // Extrae los componentes de la fecha actual
+        
+        // Crea una nueva fecha con el año y mes actual pero manteniendo el día, hora, etc., de `currentDate`
+        if let newDate = calendar.date(from: components) {
+            currentDate = newDate
+        }
+    }
 }
 
 struct CalendarView: View {
@@ -152,15 +160,8 @@ struct CalendarView: View {
     @State private var feelingSelected = 0
     @State private var dateFeelingMap: [String: Int] = [:]
     
-    fileprivate func handleTapOnDay(day: Int) {
-        // Acciones al seleccionar un día
-        //print(calendarData.monthSelectedString())
-        let month = Int(calendarData.monthSelectedString()) ?? 1
-        //print(calendarData.yearSelectedString())
-        let year = Int(calendarData.yearSelectedString()) ?? 1991
-        //print(day)
+    fileprivate func handleTapOnDay(day: Int, month: Int, year: Int) {
         let selectedDate = calendarData.createDate(year: year, month: month, day: Int(day))
-        //print(selectedDate)
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd, YYYY"
         self.selectedDate = formatter.string(from: selectedDate ?? Date())
@@ -168,7 +169,7 @@ struct CalendarView: View {
         self.selectedDateKey = formatter.string(from: selectedDate ?? Date())
         self.isModalPresented.toggle()
     }
-    
+
     var body: some View {
         VStack {
             Text(calendarData.monthString())
@@ -193,7 +194,11 @@ struct CalendarView: View {
                         .overlay(addOverlayIfToday(isToday: true))
                         .cornerRadius(5)
                         .onTapGesture {
-                            handleTapOnDay(day: Int(day) ?? 1)
+                            handleTapOnDay(
+                                day: Int(day) ?? 1,
+                                month: Int(calendarData.monthSelectedString()) ?? 1,
+                                year: Int(calendarData.yearSelectedString()) ?? 1991
+                            )
                         }
                 }
                 
@@ -212,13 +217,17 @@ struct CalendarView: View {
             VStack {
                 Text("Today Log")
                     .frame(maxWidth: .infinity, minHeight: 75)
-                    .background(Color.gray.opacity(0.3))
+                    .background(Color.blue.opacity(0.3))
+                    .foregroundColor(Color.blue)
                     .cornerRadius(5)
                     .onTapGesture {
                         let today = Date()
                         let calendar = Calendar.current
                         let day = calendar.component(.day, from: today)
-                        handleTapOnDay(day: day)
+                        let month = calendar.component(.month, from: today)
+                        let year = calendar.component(.year, from: today)
+                        handleTapOnDay(day: day, month: month, year: year)
+                        calendarData.goToCurrentMonth()
                     }
             }
             .padding(.horizontal)
