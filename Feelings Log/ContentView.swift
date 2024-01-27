@@ -10,24 +10,17 @@ struct ContentView: View {
     @State private var selectedTab = 2
     var body: some View {
         TabView(selection: $selectedTab) {
-            FirstView()
+            EmotionLogger(selectedTab: $selectedTab)
                 .tabItem {
-                    Image(systemName: "heart.fill")
-                    Text("Primero")
-                }
-                .tag(1)
-            
-            SecondView(selectedTab: $selectedTab)
-                .tabItem {
-                    Image(systemName: "calendar")
-                    Text("Segundo")
+                    Image(systemName: "heart")
+                    Text("Feeling Log")
                 }
                 .tag(2)
             
-            ThirdView()
+            YearInReview()
                 .tabItem {
-                    Image(systemName: "bolt.fill")
-                    Text("Tercero")
+                    Image(systemName: "calendar")
+                    Text("Year in Review")
                 }
                 .tag(3)
         }
