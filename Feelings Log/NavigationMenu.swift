@@ -9,7 +9,6 @@ import SwiftUI
 enum Tab {
     case primera
     case segunda
-    // Añade más pestañas según sea necesario
 }
 
 struct ContentView: View {
@@ -32,7 +31,6 @@ struct ContentView: View {
                 }
                 .tag(Tab.segunda)
         }
-        .animation(.easeInOut, value: selectedTab) // Aplica la animación al cambiar de pestaña
 
     }
 }
