@@ -8,14 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		9C7585042B4B20170093269B /* Feelings_LogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585032B4B20170093269B /* Feelings_LogApp.swift */; };
-		9C7585062B4B20170093269B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585052B4B20170093269B /* ContentView.swift */; };
+		9C7585062B4B20170093269B /* NavigationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585052B4B20170093269B /* NavigationMenu.swift */; };
 		9C7585082B4B20180093269B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C7585072B4B20180093269B /* Assets.xcassets */; };
 		9C75850B2B4B20180093269B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C75850A2B4B20180093269B /* Preview Assets.xcassets */; };
 		9C7585152B4B20180093269B /* Feelings_LogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585142B4B20180093269B /* Feelings_LogTests.swift */; };
 		9C75851F2B4B20180093269B /* Feelings_LogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C75851E2B4B20180093269B /* Feelings_LogUITests.swift */; };
 		9C7585212B4B20180093269B /* Feelings_LogUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585202B4B20180093269B /* Feelings_LogUITestsLaunchTests.swift */; };
-		9C7585322B4B21110093269B /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585312B4B21110093269B /* Views.swift */; };
+		9C7585322B4B21110093269B /* EmotionLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585312B4B21110093269B /* EmotionLogger.swift */; };
 		9C7585342B4B321F0093269B /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585332B4B321F0093269B /* Calendar.swift */; };
+		9CED0DB22B65FE4300A5FD28 /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED0DB12B65FE4300A5FD28 /* Modal.swift */; };
+		9CED0DB42B65FEB300A5FD28 /* YearInReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED0DB32B65FEB300A5FD28 /* YearInReview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +40,7 @@
 /* Begin PBXFileReference section */
 		9C7585002B4B20170093269B /* Feelings Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Feelings Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C7585032B4B20170093269B /* Feelings_LogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feelings_LogApp.swift; sourceTree = "<group>"; };
-		9C7585052B4B20170093269B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9C7585052B4B20170093269B /* NavigationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationMenu.swift; sourceTree = "<group>"; };
 		9C7585072B4B20180093269B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C75850A2B4B20180093269B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9C7585102B4B20180093269B /* Feelings LogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Feelings LogTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,8 +48,10 @@
 		9C75851A2B4B20180093269B /* Feelings LogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Feelings LogUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C75851E2B4B20180093269B /* Feelings_LogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feelings_LogUITests.swift; sourceTree = "<group>"; };
 		9C7585202B4B20180093269B /* Feelings_LogUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feelings_LogUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		9C7585312B4B21110093269B /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
+		9C7585312B4B21110093269B /* EmotionLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionLogger.swift; sourceTree = "<group>"; };
 		9C7585332B4B321F0093269B /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		9CED0DB12B65FE4300A5FD28 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
+		9CED0DB32B65FEB300A5FD28 /* YearInReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearInReview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +104,10 @@
 			children = (
 				9C7585032B4B20170093269B /* Feelings_LogApp.swift */,
 				9C7585332B4B321F0093269B /* Calendar.swift */,
-				9C7585312B4B21110093269B /* Views.swift */,
-				9C7585052B4B20170093269B /* ContentView.swift */,
+				9CED0DB12B65FE4300A5FD28 /* Modal.swift */,
+				9CED0DB32B65FEB300A5FD28 /* YearInReview.swift */,
+				9C7585312B4B21110093269B /* EmotionLogger.swift */,
+				9C7585052B4B20170093269B /* NavigationMenu.swift */,
 				9C7585072B4B20180093269B /* Assets.xcassets */,
 				9C7585092B4B20180093269B /* Preview Content */,
 			);
@@ -263,8 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C7585062B4B20170093269B /* ContentView.swift in Sources */,
-				9C7585322B4B21110093269B /* Views.swift in Sources */,
+				9C7585062B4B20170093269B /* NavigationMenu.swift in Sources */,
+				9CED0DB22B65FE4300A5FD28 /* Modal.swift in Sources */,
+				9C7585322B4B21110093269B /* EmotionLogger.swift in Sources */,
+				9CED0DB42B65FEB300A5FD28 /* YearInReview.swift in Sources */,
 				9C7585042B4B20170093269B /* Feelings_LogApp.swift in Sources */,
 				9C7585342B4B321F0093269B /* Calendar.swift in Sources */,
 			);

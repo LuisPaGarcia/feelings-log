@@ -6,24 +6,34 @@
 //
 import SwiftUI
 
+enum Tab {
+    case primera
+    case segunda
+    // Añade más pestañas según sea necesario
+}
+
 struct ContentView: View {
-    @State private var selectedTab = 2
+    //@State private var selectedTab = 1
+    @State private var selectedTab: Tab = .primera
+
     var body: some View {
         TabView(selection: $selectedTab) {
-            EmotionLogger(selectedTab: $selectedTab)
+            EmotionLogger()
                 .tabItem {
                     Image(systemName: "heart")
                     Text("Feeling Log")
                 }
-                .tag(2)
+                .tag(Tab.primera)
             
             YearInReview()
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Year in Review")
                 }
-                .tag(3)
+                .tag(Tab.segunda)
         }
+        .animation(.easeInOut, value: selectedTab) // Aplica la animación al cambiar de pestaña
+
     }
 }
 

@@ -147,9 +147,7 @@ struct CalendarData {
     }
 }
 
-struct CalendarView: View {
-    @Binding var selectedTab: Int
-    
+struct CalendarView: View {    
     @State private var calendarData = CalendarData()
     @State private var tapped = Array(repeating: false, count: 32)
     @State private var isModalPresented = false
