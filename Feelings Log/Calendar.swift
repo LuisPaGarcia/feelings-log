@@ -211,7 +211,19 @@ struct CalendarView: View {
                 }
             }
             .padding(.horizontal)
-            
+            HStack {
+                Button("Past Month") {
+                    calendarData.prevMonth()
+                }
+                
+                Spacer()
+                
+                Button("Next Month") {
+                    calendarData.nextMonth()
+                }
+            }
+            .padding()
+
             VStack {
                 Text("Today Log")
                     .frame(maxWidth: .infinity, minHeight: 75)
@@ -230,18 +242,6 @@ struct CalendarView: View {
             }
             .padding(.horizontal)
             
-            HStack {
-                Button("Past Month") {
-                    calendarData.prevMonth()
-                }
-                
-                Spacer()
-                
-                Button("Next Month") {
-                    calendarData.nextMonth()
-                }
-            }
-            .padding()
         }
         .sheet(isPresented: $isModalPresented) {
             ModalView(
