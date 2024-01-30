@@ -225,7 +225,7 @@ struct CalendarView: View {
             .padding()
 
             VStack {
-                Text("Today Log")
+                Text("Log Today Feelings")
                     .frame(maxWidth: .infinity, minHeight: 75)
                     .background(Color.blue.opacity(0.3))
                     .foregroundColor(Color.blue)

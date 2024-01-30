@@ -21,11 +21,11 @@ struct ModalView: View {
     // TODO: Agregar storage persistente y high level.
     var body: some View {
         VStack {
-            Text("How are you feeling today?")
+            Text(selectedDate)
                 .font(.headline)
                 .padding()
-            Text(selectedDate)
-                .font(.subheadline)
+            Text("How are you feeling today?")
+                .font(.headline)
                 .padding()
             Spacer()
             // Botón 1: "Good 😄"
@@ -40,7 +40,7 @@ struct ModalView: View {
                     //.frame(maxWidth: .infinity, minHeight: 75) // Tamaño
                     .cornerRadius(15) // Bordes redondeados
                     .overlay(
-                        Text("Good 😄")
+                        Text("Nice 😄")
                             .foregroundColor(.white) // Color del texto
                             .font(.system(size: 32)) // Tamaño del texto
                     )
