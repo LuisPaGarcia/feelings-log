@@ -37,7 +37,6 @@ struct ModalView: View {
             }) {
                 Rectangle()
                     .fill(Color.green.opacity(0.8)) // Color del fondo
-                    //.frame(maxWidth: .infinity, minHeight: 75) // Tamaño
                     .cornerRadius(15) // Bordes redondeados
                     .overlay(
                         Text("Nice 😄")
@@ -56,7 +55,6 @@ struct ModalView: View {
             }) {
                 Rectangle()
                     .fill(Color.yellow.opacity(0.8)) // Color del fondo
-                    //.frame(maxWidth: .infinity, minHeight: 75) // Tamaño
                     .cornerRadius(15) // Bordes redondeados
                     .overlay(
                         Text("Normal 🙂")
@@ -75,7 +73,6 @@ struct ModalView: View {
             }) {
                 Rectangle()
                     .fill(Color.red.opacity(0.8)) // Color del fondo
-                    //.frame(maxWidth: .infinity, minHeight: 75) // Tamaño
                     .cornerRadius(15) // Bordes redondeados
                     .overlay(
                         Text("Not Good 🙁")
