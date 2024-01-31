@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import CoreData
+
 
 var evaluaciones: [Date: String] = [:]
 var day_box_dimension: CGFloat = 40
@@ -254,9 +256,23 @@ struct CalendarView: View {
     }
     
     func onSelectFeeling(selectedDateKey: String, feelingSelected: Int) -> Void {
+        // To save it temporaly
         dateFeelingMap[selectedDateKey] = feelingSelected
-        print("selected date: \(selectedDateKey), feeling: \(feelingSelected)")
-        print("Mapa actualizado: \(dateFeelingMap)")
+        // To save it in the model
+        saveFeeling(date: selectedDateKey, feeling: String(feelingSelected))
+    }
+    
+    func saveFeeling(date: String, feeling: String) {
+        let nuevoObjeto = NSEntityDescription.insertNewObject(forEntityName: "FeelingEntity", into: managedObjectContext)
+        nuevoObjeto.setValue(date, forKey: "date")
+        nuevoObjeto.setValue(feeling, forKey: "feeling")
+
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            // Manejar el error
+            print("No se pudo guardar. \(error), \(error.userInfo)")
+        }
     }
     
     private func backgroundByMatchDate(_ value: Int) -> Color {

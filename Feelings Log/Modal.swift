@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 struct ModalView: View {
     @Binding var selectedDate: String
@@ -90,4 +91,5 @@ struct ModalView: View {
             
         }
     }
+    
 }

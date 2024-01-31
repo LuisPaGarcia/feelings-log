@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C17EA312B69D4A1009A8904 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C17EA302B69D4A1009A8904 /* CoreData.framework */; };
+		9C17EA342B69D4B9009A8904 /* FeelingsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9C17EA322B69D4B9009A8904 /* FeelingsModel.xcdatamodeld */; };
+		9C17EA362B69D4D6009A8904 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C17EA352B69D4D6009A8904 /* AppDelegate.swift */; };
 		9C7585042B4B20170093269B /* Feelings_LogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585032B4B20170093269B /* Feelings_LogApp.swift */; };
 		9C7585062B4B20170093269B /* NavigationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7585052B4B20170093269B /* NavigationMenu.swift */; };
 		9C7585082B4B20180093269B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C7585072B4B20180093269B /* Assets.xcassets */; };
@@ -38,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C17EA302B69D4A1009A8904 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9C17EA332B69D4B9009A8904 /* FeelingsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FeelingsModel.xcdatamodel; sourceTree = "<group>"; };
+		9C17EA352B69D4D6009A8904 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C7585002B4B20170093269B /* Feelings Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Feelings Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C7585032B4B20170093269B /* Feelings_LogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feelings_LogApp.swift; sourceTree = "<group>"; };
 		9C7585052B4B20170093269B /* NavigationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationMenu.swift; sourceTree = "<group>"; };
@@ -59,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C17EA312B69D4A1009A8904 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C17EA2F2B69D4A1009A8904 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C17EA302B69D4A1009A8904 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9C7584F72B4B20170093269B = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +101,7 @@
 				9C7585132B4B20180093269B /* Feelings LogTests */,
 				9C75851D2B4B20180093269B /* Feelings LogUITests */,
 				9C7585012B4B20170093269B /* Products */,
+				9C17EA2F2B69D4A1009A8904 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +126,8 @@
 				9C7585052B4B20170093269B /* NavigationMenu.swift */,
 				9C7585072B4B20180093269B /* Assets.xcassets */,
 				9C7585092B4B20180093269B /* Preview Content */,
+				9C17EA322B69D4B9009A8904 /* FeelingsModel.xcdatamodeld */,
+				9C17EA352B69D4D6009A8904 /* AppDelegate.swift */,
 			);
 			path = "Feelings Log";
 			sourceTree = "<group>";
@@ -269,12 +287,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C17EA362B69D4D6009A8904 /* AppDelegate.swift in Sources */,
 				9C7585062B4B20170093269B /* NavigationMenu.swift in Sources */,
 				9CED0DB22B65FE4300A5FD28 /* Modal.swift in Sources */,
 				9C7585322B4B21110093269B /* EmotionLogger.swift in Sources */,
 				9CED0DB42B65FEB300A5FD28 /* YearInReview.swift in Sources */,
 				9C7585042B4B20170093269B /* Feelings_LogApp.swift in Sources */,
 				9C7585342B4B321F0093269B /* Calendar.swift in Sources */,
+				9C17EA342B69D4B9009A8904 /* FeelingsModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +613,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9C17EA322B69D4B9009A8904 /* FeelingsModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9C17EA332B69D4B9009A8904 /* FeelingsModel.xcdatamodel */,
+			);
+			currentVersion = 9C17EA332B69D4B9009A8904 /* FeelingsModel.xcdatamodel */;
+			path = FeelingsModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9C7584F82B4B20170093269B /* Project object */;
 }
