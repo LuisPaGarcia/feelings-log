@@ -10,7 +10,6 @@ import SwiftUI
 import CoreData
 
 
-var evaluaciones: [Date: String] = [:]
 var day_box_dimension: CGFloat = 40
 
 struct CalendarData {
@@ -159,6 +158,8 @@ struct CalendarView: View {
     @State private var selectedDateKey = ""
     @State private var feelingSelected = 0
     @State private var dateFeelingMap: [String: Int] = [:]
+    @State private var dateFeelingMapNew: [String: Int] = [:]
+    
     
     fileprivate func handleTapOnDay(day: Int, month: Int, year: Int) {
         let selectedDate = calendarData.createDate(year: year, month: month, day: Int(day))
@@ -189,8 +190,8 @@ struct CalendarView: View {
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
                     Text(day)
                         .frame(width: day_box_dimension, height: day_box_dimension)
-                        .background(backgroundByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
-                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
+                        .background(backgroundByMatchDate(dateFeelingMapNew[calendarData.getDateKey(day: day)] ?? 0))
+                        .foregroundColor(forecolorByMatchDate(dateFeelingMapNew[calendarData.getDateKey(day: day)] ?? 0))
                         .overlay(addOverlayIfToday(isToday: true))
                         .cornerRadius(5)
                         .onTapGesture {
@@ -255,24 +256,74 @@ struct CalendarView: View {
         }
     }
     
+    // Call functions to save (Currently 2)
     func onSelectFeeling(selectedDateKey: String, feelingSelected: Int) -> Void {
         // To save it temporaly
-        dateFeelingMap[selectedDateKey] = feelingSelected
+        //dateFeelingMap[selectedDateKey] = feelingSelected
         // To save it in the model
-        saveFeeling(date: selectedDateKey, feeling: String(feelingSelected))
+        saveFeeling(date_string: selectedDateKey, feeling: String(feelingSelected))
     }
     
-    func saveFeeling(date: String, feeling: String) {
-        let nuevoObjeto = NSEntityDescription.insertNewObject(forEntityName: "FeelingEntity", into: managedObjectContext)
-        nuevoObjeto.setValue(date, forKey: "date")
-        nuevoObjeto.setValue(feeling, forKey: "feeling")
+    // Transform a "yyyyMMdd" to a Date() type output
+    func fromStringToDate(date_string: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Configuración regional neutral
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0) // Zona horaria UTC
+
+        return dateFormatter.date(from: date_string) ?? Date()
+    }
+    
+    func saveFeeling(date_string: String, feeling: String) {
+        let date_time = fromStringToDate(date_string: date_string)
+        
+        let newFeelingLog = NSEntityDescription.insertNewObject(forEntityName: "FeelingEntity", into: managedObjectContext)
+        newFeelingLog.setValue(date_string, forKey: "date_string")
+        newFeelingLog.setValue(feeling, forKey: "feeling")
+        newFeelingLog.setValue(date_time, forKey: "date_time")
 
         do {
             try managedObjectContext.save()
+            updateDateFeelingMap()
         } catch let error as NSError {
             // Manejar el error
             print("No se pudo guardar. \(error), \(error.userInfo)")
         }
+            
+    }
+    
+    
+    func updateDateFeelingMap() {
+        let feelingRecords = fetchFeelings()
+
+        // Reinicia el diccionario para asegurarte de que empieza limpio cada vez que actualizas los datos
+        dateFeelingMapNew = [:]
+
+        for record in feelingRecords {
+            guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
+
+            // Asigna el feeling a la fecha correspondiente
+            // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
+            dateFeelingMapNew[dateStr] = Int(feeling)
+        }
+    }
+
+    
+    func fetchFeelings() -> [FeelingEntity] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FeelingEntity")
+
+        do {
+            if let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [FeelingEntity] {
+                // Devuelve los resultados obtenidos
+                return fetchedResults
+            }
+        } catch let error as NSError {
+            // Manejar el error
+            print("No se pudo recuperar los datos. \(error), \(error.userInfo)")
+        }
+
+        // Devuelve un arreglo vacío si la recuperación falla
+        return []
     }
     
     private func backgroundByMatchDate(_ value: Int) -> Color {
