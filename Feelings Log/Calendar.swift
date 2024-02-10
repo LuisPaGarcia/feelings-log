@@ -254,6 +254,10 @@ struct CalendarView: View {
                 onSelectFeeling: onSelectFeeling
             )
         }
+        .onAppear {
+            // Update state with the data from the store.
+            updateDateFeelingMap()
+        }
     }
     
     // Call functions to save (Currently 2)
