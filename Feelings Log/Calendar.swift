@@ -263,8 +263,6 @@ struct CalendarView: View {
     // Call functions to save (Currently 2)
     func onSelectFeeling(selectedDateKey: String, feelingSelected: Int) -> Void {
         // To save it temporaly
-        //dateFeelingMap[selectedDateKey] = feelingSelected
-        // To save it in the model
         saveFeeling(date_string: selectedDateKey, feeling: String(feelingSelected))
     }
     
