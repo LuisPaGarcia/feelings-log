@@ -158,7 +158,6 @@ struct CalendarView: View {
     @State private var selectedDateKey = ""
     @State private var feelingSelected = 0
     @State private var dateFeelingMap: [String: Int] = [:]
-    @State private var dateFeelingMapNew: [String: Int] = [:]
     
     
     fileprivate func handleTapOnDay(day: Int, month: Int, year: Int) {
@@ -190,8 +189,8 @@ struct CalendarView: View {
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
                     Text(day)
                         .frame(width: day_box_dimension, height: day_box_dimension)
-                        .background(backgroundByMatchDate(dateFeelingMapNew[calendarData.getDateKey(day: day)] ?? 0))
-                        .foregroundColor(forecolorByMatchDate(dateFeelingMapNew[calendarData.getDateKey(day: day)] ?? 0))
+                        .background(backgroundByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
+                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
                         .overlay(addOverlayIfToday(isToday: true))
                         .cornerRadius(5)
                         .onTapGesture {
@@ -299,14 +298,14 @@ struct CalendarView: View {
         let feelingRecords = fetchFeelings()
 
         // Reinicia el diccionario para asegurarte de que empieza limpio cada vez que actualizas los datos
-        dateFeelingMapNew = [:]
+        dateFeelingMap = [:]
 
         for record in feelingRecords {
             guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
 
             // Asigna el feeling a la fecha correspondiente
             // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
-            dateFeelingMapNew[dateStr] = Int(feeling)
+            dateFeelingMap[dateStr] = Int(feeling)
         }
     }
 

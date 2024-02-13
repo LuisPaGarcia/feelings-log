@@ -7,13 +7,18 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 struct YearGridView: View {
+    // TODO: Cada item del grid debe tener un ID como key para obtenerlo del Model
     // TODO: Mes estático, debe considerar ver por año (Desde 2024)
     // TODO: Agregar un higher level state para compartir la data entre la vista 1 y la vista 2
     // TODO: Agregar % de emotion
     // TODO: Exportar como Imagen para share! 🥳
     let year: Int
+    
+    @State private var dateFeelingMap: [String: Int] = [:]
+    
     
     var daysInYear: [Int] {
         // Calcula la cantidad de días en el año
@@ -37,14 +42,19 @@ struct YearGridView: View {
                 ForEach(daysInYear, id: \.self) { day in
                     Text("")
                         .frame(width: 15, height: 15)
-                        .background(backgroundByMatchDate(3))
-                        .foregroundColor(.white)
                         .cornerRadius(4)
+                        .background(backgroundByMatchDate(dateFeelingMap["20240320"] ?? 0))
+                        .foregroundColor(forecolorByMatchDate(dateFeelingMap["20240320"] ?? 0))
+                    
                 }
             }
             .padding()
         }
         .navigationTitle("Año \(year)")
+        .onAppear {
+            // Update state with the data from the store.
+            initFetch()
+        }
     }
     
     private func backgroundByMatchDate(_ value: Int) -> Color {
@@ -59,5 +69,68 @@ struct YearGridView: View {
             return Color.gray.opacity(0.6) // No emotion logged
         }
     }
-
+    
+    private func initFetch() {
+        let feelingRecords = fetchFeelings()
+        
+        // Reinicia el diccionario para asegurarte de que empieza limpio cada vez que actualizas los datos
+        dateFeelingMap = [:]
+        
+        for record in feelingRecords {
+            guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
+            
+            // Asigna el feeling a la fecha correspondiente
+            // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
+            dateFeelingMap[dateStr] = Int(feeling)
+        }
+        
+        print(dateFeelingMap)
+    }
+    
+    private func fetchFeelings() -> [FeelingEntity] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FeelingEntity")
+        
+        do {
+            if let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [FeelingEntity] {
+                // Devuelve los resultados obtenidos
+                return fetchedResults
+            }
+        } catch let error as NSError {
+            // Manejar el error
+            print("No se pudo recuperar los datos. \(error), \(error.userInfo)")
+        }
+        
+        // Devuelve un arreglo vacío si la recuperación falla
+        return []
+    }
+    
+    private func updateDateFeelingMap() {
+        let feelingRecords = fetchFeelings()
+        
+        // Reinicia el diccionario para asegurarte de que empieza limpio cada vez que actualizas los datos
+        dateFeelingMap = [:]
+        
+        for record in feelingRecords {
+            guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
+            
+            // Asigna el feeling a la fecha correspondiente
+            // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
+            dateFeelingMap[dateStr] = Int(feeling)
+        }
+    }
+    
+    private func forecolorByMatchDate(_ value: Int) -> Color {
+        switch value {
+        case 1:
+            return Color.green
+        case 2:
+            return Color.orange
+        case 3:
+            return Color.red
+        default:
+            return Color.black
+        }
+    }
+    
+    
 }
