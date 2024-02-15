@@ -33,6 +33,21 @@ struct YearGridView: View {
     // Define la disposición de las celdas en el grid
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 15) // 7 para una semana
     
+    func formatDate(dayOfYear: Int) -> String {
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.day = dayOfYear
+
+        if let date = calendar.date(from: dateComponents) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            return dateFormatter.string(from: date)
+        }
+
+        return ""
+    }
+    
     var body: some View {
         ScrollView {
             Text("Year \(year) in review")
@@ -40,11 +55,12 @@ struct YearGridView: View {
                 .padding(.horizontal)
             LazyVGrid(columns: columns, spacing: 5) {
                 ForEach(daysInYear, id: \.self) { day in
+                    let key = formatDate(dayOfYear: day)
                     Text("")
                         .frame(width: 15, height: 15)
                         .cornerRadius(4)
-                        .background(backgroundByMatchDate(dateFeelingMap["20240320"] ?? 0))
-                        .foregroundColor(forecolorByMatchDate(dateFeelingMap["20240320"] ?? 0))
+                        .background(backgroundByMatchDate(dateFeelingMap[key] ?? 0))
+                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[key] ?? 0))
                     
                 }
             }
