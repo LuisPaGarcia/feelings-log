@@ -24,7 +24,7 @@ struct ContentView: View {
                 }
                 .tag(Tab.primera)
             
-            YearGridView(year: 2024)
+            YearGridView()
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Year in Review")

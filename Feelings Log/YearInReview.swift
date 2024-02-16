@@ -15,8 +15,8 @@ struct YearGridView: View {
     // TODO: Agregar un higher level state para compartir la data entre la vista 1 y la vista 2
     // TODO: Agregar % de emotion
     // TODO: Exportar como Imagen para share! 🥳
-    let year: Int
-    
+    //let year: Int
+    @State private var year = Calendar.current.component(.year, from: Date()) // Asume que ya tienes esta variable definida
     @State private var dateFeelingMap: [String: Int] = [:]
     
     
@@ -38,13 +38,13 @@ struct YearGridView: View {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.day = dayOfYear
-
+        
         if let date = calendar.date(from: dateComponents) {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyyMMdd"
             return dateFormatter.string(from: date)
         }
-
+        
         return ""
     }
     
@@ -65,6 +65,40 @@ struct YearGridView: View {
                 }
             }
             .padding()
+            VStack {
+                Text("See current year")
+                    .frame(maxWidth: .infinity, minHeight: 45)
+                    .background(Color.blue.opacity(0.3))
+                    .foregroundColor(Color.blue)
+                    .cornerRadius(5)
+                    .onTapGesture {
+                        self.year = Calendar.current.component(.year, from: Date()) // Asume que ya tienes esta variable definida
+                    }
+            }
+            .padding(.horizontal)
+            
+            HStack {
+                Button(action: {
+                    self.year -= 1 // Acción para el botón "Año anterior"
+                }) {
+                    Image(systemName: "arrow.left")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding()
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    self.year += 1 // Acción para el botón "Siguiente año"
+                }) {
+                    Image(systemName: "arrow.right")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding()
+                }
+            }
+            .padding(.horizontal)
         }
         .navigationTitle("Año \(year)")
         .onAppear {
