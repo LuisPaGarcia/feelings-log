@@ -14,7 +14,7 @@ enum Tab {
 struct ContentView: View {
     //@State private var selectedTab = 1
     @State private var selectedTab: Tab = .primera
-
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             EmotionLogger()
@@ -31,7 +31,7 @@ struct ContentView: View {
                 }
                 .tag(Tab.segunda)
         }
-
+        
     }
 }
 

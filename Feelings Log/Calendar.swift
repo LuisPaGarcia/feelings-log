@@ -169,7 +169,7 @@ struct CalendarView: View {
         self.selectedDateKey = formatter.string(from: selectedDate ?? Date())
         self.isModalPresented.toggle()
     }
-
+    
     var body: some View {
         VStack {
             Text(calendarData.monthString())
@@ -225,7 +225,7 @@ struct CalendarView: View {
                 }
             }
             .padding()
-
+            
             VStack {
                 Text("Log Today Feelings")
                     .frame(maxWidth: .infinity, minHeight: 75)
@@ -271,7 +271,7 @@ struct CalendarView: View {
         dateFormatter.dateFormat = "yyyyMMdd"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Configuración regional neutral
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0) // Zona horaria UTC
-
+        
         return dateFormatter.date(from: date_string) ?? Date()
     }
     
@@ -282,7 +282,7 @@ struct CalendarView: View {
         newFeelingLog.setValue(date_string, forKey: "date_string")
         newFeelingLog.setValue(feeling, forKey: "feeling")
         newFeelingLog.setValue(date_time, forKey: "date_time")
-
+        
         do {
             try managedObjectContext.save()
             updateDateFeelingMap()
@@ -290,29 +290,29 @@ struct CalendarView: View {
             // Manejar el error
             print("No se pudo guardar. \(error), \(error.userInfo)")
         }
-            
+        
     }
     
     
     func updateDateFeelingMap() {
         let feelingRecords = fetchFeelings()
-
+        
         // Reinicia el diccionario para asegurarte de que empieza limpio cada vez que actualizas los datos
         dateFeelingMap = [:]
-
+        
         for record in feelingRecords {
             guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
-
+            
             // Asigna el feeling a la fecha correspondiente
             // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
             dateFeelingMap[dateStr] = Int(feeling)
         }
     }
-
+    
     
     func fetchFeelings() -> [FeelingEntity] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FeelingEntity")
-
+        
         do {
             if let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [FeelingEntity] {
                 // Devuelve los resultados obtenidos
@@ -322,7 +322,7 @@ struct CalendarView: View {
             // Manejar el error
             print("No se pudo recuperar los datos. \(error), \(error.userInfo)")
         }
-
+        
         // Devuelve un arreglo vacío si la recuperación falla
         return []
     }
@@ -339,7 +339,7 @@ struct CalendarView: View {
             return Color.gray.opacity(0.3) // No emotion logged
         }
     }
-
+    
     private func forecolorByMatchDate(_ value: Int) -> Color {
         switch value {
         case 1:
@@ -352,7 +352,7 @@ struct CalendarView: View {
             return Color.black
         }
     }
-
+    
     
     private func addOverlayIfToday(isToday: Bool) -> Color {
         if isToday == true {
