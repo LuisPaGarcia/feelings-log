@@ -260,9 +260,9 @@ struct CalendarView: View {
     }
     
     // Call functions to save (Currently 2)
-    func onSelectFeeling(selectedDateKey: String, feelingSelected: Int) -> Void {
+    func onSelectFeeling(selectedDateKey: String, feelingSelected: Int, comment: String) -> Void {
         // To save it temporaly
-        saveFeeling(date_string: selectedDateKey, feeling: String(feelingSelected))
+        saveFeeling(date_string: selectedDateKey, feeling: String(feelingSelected), comment: comment)
     }
     
     // Transform a "yyyyMMdd" to a Date() type output
@@ -275,14 +275,15 @@ struct CalendarView: View {
         return dateFormatter.date(from: date_string) ?? Date()
     }
     
-    func saveFeeling(date_string: String, feeling: String) {
+    func saveFeeling(date_string: String, feeling: String, comment: String) {
         let date_time = fromStringToDate(date_string: date_string)
         
         let newFeelingLog = NSEntityDescription.insertNewObject(forEntityName: "FeelingEntity", into: managedObjectContext)
         newFeelingLog.setValue(date_string, forKey: "date_string")
         newFeelingLog.setValue(feeling, forKey: "feeling")
         newFeelingLog.setValue(date_time, forKey: "date_time")
-        
+        newFeelingLog.setValue(comment, forKey: "comment")
+
         do {
             try managedObjectContext.save()
             updateDateFeelingMap()
