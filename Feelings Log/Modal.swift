@@ -96,7 +96,7 @@ struct ModalView: View {
                     .padding(.horizontal)
                 
                 if comment.isEmpty {
-                    Text("Escribe aquí tu sentimiento opcional...")
+                    Text("optional comment...")
                         .foregroundColor(.gray) // Color del placeholder
                         .padding(.leading, 25)
                         .padding(.top, 12)
