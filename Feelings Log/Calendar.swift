@@ -12,6 +12,13 @@ import CoreData
 
 var day_box_dimension: CGFloat = 40
 
+struct FeelingStructure {
+    var date_string: String
+    var comment: String
+    var date_time: Date
+    var feeling: Int
+}
+
 struct CalendarData {
     private var calendar = Calendar.current
     private(set) var currentDate = Date()
@@ -157,8 +164,9 @@ struct CalendarView: View {
     @State private var selectedDate = ""
     @State private var selectedDateKey = ""
     @State private var feelingSelected = 0
-    @State private var dateFeelingMap: [String: Int] = [:]
-    
+    @State private var dateFeelingMap = [String: FeelingStructure]()
+
+
     
     fileprivate func handleTapOnDay(day: Int, month: Int, year: Int) {
         let selectedDate = calendarData.createDate(year: year, month: month, day: Int(day))
@@ -189,8 +197,8 @@ struct CalendarView: View {
                 ForEach(calendarData.daysInMonth(), id: \.self) { day in
                     Text(day)
                         .frame(width: day_box_dimension, height: day_box_dimension)
-                        .background(backgroundByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
-                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)] ?? 0))
+                        .background(backgroundByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)]?.feeling ?? 0))
+                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[calendarData.getDateKey(day: day)]?.feeling ?? 0))
                         .overlay(addOverlayIfToday(isToday: true))
                         .cornerRadius(5)
                         .onTapGesture {
@@ -302,11 +310,16 @@ struct CalendarView: View {
         dateFeelingMap = [:]
         
         for record in feelingRecords {
-            guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
-            
             // Asigna el feeling a la fecha correspondiente
             // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
-            dateFeelingMap[dateStr] = Int(feeling)
+            
+            let date_string = record.value(forKey: "date_string") as? String ?? ""
+            let comment = record.value(forKey: "comment") as? String ?? ""
+            let date_time = record.value(forKey: "date_time") as? Date ?? Date()
+            let feeling = record.value(forKey: "feeling") as? String ?? "0"
+            
+            let FeelingStructureFilled = FeelingStructure(date_string: date_string, comment: comment, date_time: date_time, feeling: Int(feeling) ?? 0)
+            dateFeelingMap[date_string] = FeelingStructureFilled
         }
     }
     
