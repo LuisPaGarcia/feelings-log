@@ -17,8 +17,8 @@ struct YearGridView: View {
     // TODO: Exportar como Imagen para share! 🥳
     //let year: Int
     @State private var year = Calendar.current.component(.year, from: Date()) // Asume que ya tienes esta variable definida
-    @State private var dateFeelingMap: [String: Int] = [:]
-    
+    @State private var dateFeelingMap = [String: FeelingStructure]()
+
     
     var daysInYear: [Int] {
         // Calcula la cantidad de días en el año
@@ -59,8 +59,8 @@ struct YearGridView: View {
                     Text("")
                         .frame(width: 15, height: 15)
                         .cornerRadius(4)
-                        .background(backgroundByMatchDate(dateFeelingMap[key] ?? 0))
-                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[key] ?? 0))
+                        .background(backgroundByMatchDate(dateFeelingMap[key]?.feeling ?? 0))
+                        .foregroundColor(forecolorByMatchDate(dateFeelingMap[key]?.feeling ?? 0))
                     
                 }
             }
@@ -127,11 +127,18 @@ struct YearGridView: View {
         dateFeelingMap = [:]
         
         for record in feelingRecords {
-            guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
             
             // Asigna el feeling a la fecha correspondiente
             // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
-            dateFeelingMap[dateStr] = Int(feeling)
+            
+            let date_string = record.value(forKey: "date_string") as? String ?? ""
+            let comment = record.value(forKey: "comment") as? String ?? ""
+            let date_time = record.value(forKey: "date_time") as? Date ?? Date()
+            let feeling = record.value(forKey: "feeling") as? String ?? "0"
+            
+            let FeelingStructureFilled = FeelingStructure(date_string: date_string, comment: comment, date_time: date_time, feeling: Int(feeling) ?? 0)
+            dateFeelingMap[date_string] = FeelingStructureFilled
+
         }
         
         print(dateFeelingMap)
@@ -161,11 +168,17 @@ struct YearGridView: View {
         dateFeelingMap = [:]
         
         for record in feelingRecords {
-            guard let dateStr = record.date_string, let feeling = record.feeling else { continue }
             
             // Asigna el feeling a la fecha correspondiente
             // Si hay múltiples registros para la misma fecha, este código sobrescribirá los valores anteriores con los más recientes
-            dateFeelingMap[dateStr] = Int(feeling)
+            
+            let date_string = record.value(forKey: "date_string") as? String ?? ""
+            let comment = record.value(forKey: "comment") as? String ?? ""
+            let date_time = record.value(forKey: "date_time") as? Date ?? Date()
+            let feeling = record.value(forKey: "feeling") as? String ?? "0"
+            
+            let FeelingStructureFilled = FeelingStructure(date_string: date_string, comment: comment, date_time: date_time, feeling: Int(feeling) ?? 0)
+            dateFeelingMap[date_string] = FeelingStructureFilled
         }
     }
     
