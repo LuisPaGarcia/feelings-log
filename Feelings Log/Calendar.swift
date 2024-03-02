@@ -164,6 +164,7 @@ struct CalendarView: View {
     @State private var selectedDate = ""
     @State private var selectedDateKey = ""
     @State private var feelingSelected = 0
+    @State private var comment = ""
     @State private var dateFeelingMap = [String: FeelingStructure]()
 
 
@@ -176,6 +177,8 @@ struct CalendarView: View {
         formatter.dateFormat = "yyyyMMdd"
         self.selectedDateKey = formatter.string(from: selectedDate ?? Date())
         self.isModalPresented.toggle()
+        // Get the comment from the day selected, or empty
+        self.comment = dateFeelingMap[self.selectedDateKey]?.comment ?? ""
     }
     
     var body: some View {
@@ -258,6 +261,7 @@ struct CalendarView: View {
                 selectedDate: $selectedDate,
                 selectedDateKey: $selectedDateKey,
                 feelingSelected: $feelingSelected,
+                comment: $comment,
                 onSelectFeeling: onSelectFeeling
             )
         }

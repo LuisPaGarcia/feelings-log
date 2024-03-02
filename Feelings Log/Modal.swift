@@ -13,11 +13,10 @@ struct ModalView: View {
     @Binding var selectedDate: String
     @Binding var selectedDateKey: String
     @Binding var feelingSelected: Int
+    @Binding var comment: String
     var onSelectFeeling: (String, Int, String) -> Void
     
     @Environment(\.presentationMode) var presentationMode
-    @State private var comment: String = "" // Estado para almacenar el texto ingresado
-
     // TODO: Mejorar el UI del modal (Parece un puto semáforo)
     // TODO: Mejorar posición del calendario (Maybe swipe? Subirlos?)
     // TODO: Agregar storage persistente y high level.
