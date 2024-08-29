@@ -192,7 +192,7 @@ struct CalendarView: View {
                 ForEach(calendarData.createArrayBasedOnWeekday(), id: \.self) { day in
                     Text("")
                         .frame(width: day_box_dimension, height: day_box_dimension)
-                        .background(Color.white.opacity(0.3))
+                        .background(Color(UIColor.systemBackground))//Color.white.opacity(0.3))
                         .cornerRadius(5)
                 }
                 
@@ -218,7 +218,7 @@ struct CalendarView: View {
                     ForEach(Array(repeating: "", count: 7), id: \.self) { day in
                         Text("")
                             .frame(width: day_box_dimension, height: day_box_dimension)
-                            .background(Color.white.opacity(0.3))
+                            .background(Color(UIColor.systemBackground))
                             .cornerRadius(5)
                     }
                 }
@@ -374,7 +374,7 @@ struct CalendarView: View {
     
     private func addOverlayIfToday(isToday: Bool) -> Color {
         if isToday == true {
-            return Color.gray.opacity(0.0)
+            return Color.gray.opacity(0.0) //Color(UIColor.systemBackground)
         }
         
         return Color.black.opacity(0)
