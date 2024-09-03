@@ -106,7 +106,7 @@ struct ModalView: View {
             
             Spacer() // Ajusta según sea necesario
             
-            Button("Close") {
+            Button("Save and close") {
                 self.presentationMode.wrappedValue.dismiss()
             }
             
